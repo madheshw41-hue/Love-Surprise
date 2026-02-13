@@ -12,11 +12,11 @@
 body{
   margin:0;
   min-height:100vh;
-  background:
-    radial-gradient(circle at top,#1b1f3b,#090a1a 70%);
+  background:radial-gradient(circle at top,#1b1f3b,#090a1a 70%);
   overflow:hidden;
   font-family:'Inter',sans-serif;
   color:#f8fafc;
+  touch-action:manipulation;
 }
 
 .container{
@@ -25,61 +25,56 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
-  z-index:5;
 }
 
 .card{
   width:90%;
-  max-width:720px;
+  max-width:760px;
+  min-height:320px;
   padding:60px 50px;
-  border-radius:28px;
-  background:
-    linear-gradient(145deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03));
-  backdrop-filter:blur(18px);
-  border:1.5px solid rgba(255,255,255,0.25);
-  box-shadow:
-    0 40px 100px rgba(0,0,0,0.8),
-    inset 0 0 40px rgba(255,255,255,0.05);
+  border-radius:30px;
+  background:linear-gradient(145deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04));
+  backdrop-filter:blur(20px);
+  border:2px solid rgba(255,255,255,0.25);
+  box-shadow:0 50px 120px rgba(0,0,0,.8);
   text-align:center;
 }
 
 h1{
   font-family:'Playfair Display',serif;
   font-size:42px;
-  margin-bottom:12px;
 }
 
 h1 span{
   font-family:'Dancing Script',cursive;
-  font-size:48px;
   color:#f472b6;
+  font-size:50px;
 }
 
 .subtitle{
   opacity:.85;
-  margin-bottom:30px;
+  margin-bottom:25px;
 }
 
 .message{
-  font-size:18px;
+  font-size:19px;
   line-height:1.9;
-  min-height:120px;
+  min-height:160px;
 }
 
 .tap{
-  margin-top:25px;
+  margin-top:20px;
   font-size:14px;
   opacity:.6;
 }
 
-/* floating hearts & stars */
+/* hearts & stars */
 .float{
   position:fixed;
   bottom:-40px;
   font-size:22px;
   animation:floatUp linear forwards;
   pointer-events:none;
-  z-index:2;
 }
 
 @keyframes floatUp{
@@ -101,56 +96,59 @@ audio{display:none}
   <div class="card" id="card">
     <h1>For <span>Keerthana</span></h1>
     <div class="subtitle">Tap slowly… read gently</div>
-
     <div class="message" id="text"></div>
-
-    <div class="tap">Tap anywhere to continue</div>
+    <div class="tap">Tap anywhere on this card</div>
   </div>
 </div>
 
 <script>
 const lines=[
-  "Hi My Queeneyyy",
+  "Hi Baeee…",
   "This page wasn’t made in a rush.",
   "It was made slowly. Carefully.",
   "Just like how I think about you.",
   "",
-  "You have this calm presence…",
-  "the kind that makes chaos feel quiet.",
+  "You bring calm into my chaos.",
+  "You make silence feel warm.",
   "",
-  "In a world that keeps changing,",
-  "you somehow feel constant.",
+  "In a world full of temporary things,",
+  "you are my constant.",
   "",
-  "I don’t love you loudly.",
-  "I love you deeply.",
+  "I don’t love loudly.",
+  "I love deeply.",
   "",
-  "And if forever had a feeling,",
+  "If forever had a feeling,",
   "it would feel like you.",
   "",
   "Always.",
-  "Only you Love you so Much da Cheloo❤️"
+  "Only you ❤️"
+  "Happy Valentines Day Pondattiye"
 ];
 
 let index=0;
 const text=document.getElementById("text");
+const card=document.getElementById("card");
 const bgm=document.getElementById("bgm");
 
-document.body.addEventListener("click",()=>{
+function nextLine(){
   if(index<lines.length){
     text.innerHTML+=lines[index]+"<br>";
     index++;
     bgm.play();
   }
-});
+}
+
+card.addEventListener("click",nextLine);
+card.addEventListener("touchstart",nextLine,{passive:true});
 
 function floatItem(symbol){
   const f=document.createElement("div");
   f.className="float";
   f.innerHTML=symbol;
   f.style.left=Math.random()*95+"vw";
-  f.style.animationDuration=(8+Math.random()*6)+"s";
+  f.style.animationDuration=(9+Math.random()*6)+"s";
   document.body.appendChild(f);
-  setTimeout(()=>f.remove(),14000);
+  setTimeout(()=>f.remove(),15000);
 }
 
 setInterval(()=>{
