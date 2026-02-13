@@ -16,6 +16,7 @@ body{
   color:#f3f4f6;
   font-family:'Inter',sans-serif;
   overflow:hidden;
+  touch-action:manipulation;
 }
 
 .center{
@@ -24,6 +25,7 @@ body{
   display:flex;
   align-items:center;
   justify-content:center;
+  z-index:5;
 }
 
 .card{
@@ -34,7 +36,6 @@ body{
   border-radius:24px;
   box-shadow:0 30px 80px rgba(0,0,0,0.7);
   text-align:center;
-  z-index:5;
   animation:fadeUp 1.4s ease;
 }
 
@@ -46,7 +47,6 @@ body{
 h1{
   font-family:'Playfair Display',serif;
   font-size:36px;
-  margin-bottom:14px;
 }
 
 p{
@@ -57,27 +57,25 @@ p{
 .hidden{display:none}
 
 #counter{
-  margin-top:20px;
+  margin-top:18px;
   font-size:16px;
-  opacity:.8;
+  opacity:.85;
 }
 
 /* HEART GAME */
 .heart{
-  position:absolute;
-  font-size:24px;
+  position:fixed;
+  bottom:-30px;
+  font-size:28px;
   cursor:pointer;
+  z-index:10;
+  pointer-events:auto;
   animation:floatUp linear forwards;
 }
 
 @keyframes floatUp{
-  from{transform:translateY(100vh);opacity:0}
-  to{transform:translateY(-10vh);opacity:1}
-}
-
-/* FINAL CONTENT */
-.final p{
-  margin-top:25px;
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120vh);opacity:0}
 }
 
 audio{display:none}
@@ -94,31 +92,25 @@ audio{display:none}
   <div class="card" id="start">
     <h1>For You</h1>
     <p>
-      Before you read this,<br>
-      I want you to play a little.
+      Small game first 😊<br>
+      <b>Catch 5 hearts ❤️</b>
     </p>
-    <p><b>Catch 5 hearts ❤️</b></p>
     <div id="counter">Hearts caught: 0 / 5</div>
   </div>
 
-  <div class="card hidden final" id="final">
+  <div class="card hidden" id="final">
     <h1>Now Read This</h1>
     <p>
       This wasn’t made to impress you.<br>
       It was made because you matter.
       <br><br>
 
-      In a noisy world full of temporary things,<br>
+      In a world full of temporary things,<br>
       you are my constant.
       <br><br>
 
-      Loving you doesn’t feel dramatic —<br>
-      it feels right.
-      <br><br>
-
-      If I ever stop and ask myself<br>
-      what I’m grateful for,<br>
-      the answer will always be you.
+      Loving you feels calm.<br>
+      And calm is rare.
       <br><br>
 
       <b>Always. Only you.</b>
@@ -129,29 +121,31 @@ audio{display:none}
 <script>
 let count=0;
 
-// Create floating hearts
 function createHeart(){
   const h=document.createElement("div");
   h.className="heart";
   h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
+  h.style.left=Math.random()*90+"vw";
   h.style.animationDuration=(6+Math.random()*4)+"s";
   document.body.appendChild(h);
 
-  h.onclick=()=>{
+  // iOS FIX: touchstart
+  h.addEventListener("touchstart",catchHeart,{passive:true});
+  h.addEventListener("click",catchHeart);
+
+  function catchHeart(){
     count++;
-    document.getElementById("counter").innerText=`Hearts caught: ${count} / 5`;
+    document.getElementById("counter").innerText =
+      `Hearts caught: ${count} / 5`;
     h.remove();
     if(count>=5) winGame();
-  };
+  }
 
   setTimeout(()=>h.remove(),9000);
 }
 
-// Start hearts
 let interval=setInterval(createHeart,900);
 
-// Win condition
 function winGame(){
   clearInterval(interval);
   document.getElementById("start").classList.add("hidden");
