@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You</title>
+<title>For Keerthana</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
@@ -12,14 +12,14 @@
 body{
   margin:0;
   min-height:100vh;
-  background:radial-gradient(circle at top,#0b1020,#020617);
-  color:#f3f4f6;
-  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top,#1b1f3b,#090a1a 70%);
   overflow:hidden;
-  touch-action:manipulation;
+  font-family:'Inter',sans-serif;
+  color:#f8fafc;
 }
 
-.center{
+.container{
   position:absolute;
   inset:0;
   display:flex;
@@ -29,53 +29,62 @@ body{
 }
 
 .card{
-  max-width:620px;
-  padding:50px 45px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(14px);
-  border-radius:24px;
-  box-shadow:0 30px 80px rgba(0,0,0,0.7);
+  width:90%;
+  max-width:720px;
+  padding:60px 50px;
+  border-radius:28px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03));
+  backdrop-filter:blur(18px);
+  border:1.5px solid rgba(255,255,255,0.25);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.8),
+    inset 0 0 40px rgba(255,255,255,0.05);
   text-align:center;
-  animation:fadeUp 1.4s ease;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(40px)}
-  to{opacity:1;transform:translateY(0)}
 }
 
 h1{
   font-family:'Playfair Display',serif;
-  font-size:36px;
+  font-size:42px;
+  margin-bottom:12px;
 }
 
-p{
-  font-size:17px;
-  line-height:1.8;
+h1 span{
+  font-family:'Dancing Script',cursive;
+  font-size:48px;
+  color:#f472b6;
 }
 
-.hidden{display:none}
-
-#counter{
-  margin-top:18px;
-  font-size:16px;
+.subtitle{
   opacity:.85;
+  margin-bottom:30px;
 }
 
-/* HEART GAME */
-.heart{
+.message{
+  font-size:18px;
+  line-height:1.9;
+  min-height:120px;
+}
+
+.tap{
+  margin-top:25px;
+  font-size:14px;
+  opacity:.6;
+}
+
+/* floating hearts & stars */
+.float{
   position:fixed;
-  bottom:-30px;
-  font-size:28px;
-  cursor:pointer;
-  z-index:10;
-  pointer-events:auto;
+  bottom:-40px;
+  font-size:22px;
   animation:floatUp linear forwards;
+  pointer-events:none;
+  z-index:2;
 }
 
 @keyframes floatUp{
   from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-120vh);opacity:0}
+  to{transform:translateY(-130vh);opacity:0}
 }
 
 audio{display:none}
@@ -88,70 +97,66 @@ audio{display:none}
   <source src="neerparavai.mp3" type="audio/mpeg">
 </audio>
 
-<div class="center">
-  <div class="card" id="start">
-    <h1>For You</h1>
-    <p>
-      Small game first 😊<br>
-      <b>Catch 5 hearts ❤️</b>
-    </p>
-    <div id="counter">Hearts caught: 0 / 5</div>
-  </div>
+<div class="container">
+  <div class="card" id="card">
+    <h1>For <span>Keerthana</span></h1>
+    <div class="subtitle">Tap slowly… read gently</div>
 
-  <div class="card hidden" id="final">
-    <h1>Now Read This</h1>
-    <p>
-      This wasn’t made to impress you.<br>
-      It was made because you matter.
-      <br><br>
+    <div class="message" id="text"></div>
 
-      In a world full of temporary things,<br>
-      you are my constant.
-      <br><br>
-
-      Loving you feels calm.<br>
-      And calm is rare.
-      <br><br>
-
-      <b>Always. Only you.</b>
-    </p>
+    <div class="tap">Tap anywhere to continue</div>
   </div>
 </div>
 
 <script>
-let count=0;
+const lines=[
+  "Hi My Queeneyy❤️",
+  "This page wasn’t made in a rush.",
+  "It was made slowly. Carefully.",
+  "Just like how I think about you.",
+  "",
+  "You have this calm presence…",
+  "the kind that makes chaos feel quiet.",
+  "",
+  "In a world that keeps changing,",
+  "you somehow feel constant.",
+  "",
+  "I don’t love you loudly.",
+  "I love you deeply.",
+  "",
+  "And if forever had a feeling,",
+  "it would feel like you.",
+  "",
+  "Always.",
+  "Only you Love you so Much da en cheloo ❤️"
+];
 
-function createHeart(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*90+"vw";
-  h.style.animationDuration=(6+Math.random()*4)+"s";
-  document.body.appendChild(h);
+let index=0;
+const text=document.getElementById("text");
+const bgm=document.getElementById("bgm");
 
-  // iOS FIX: touchstart
-  h.addEventListener("touchstart",catchHeart,{passive:true});
-  h.addEventListener("click",catchHeart);
-
-  function catchHeart(){
-    count++;
-    document.getElementById("counter").innerText =
-      `Hearts caught: ${count} / 5`;
-    h.remove();
-    if(count>=5) winGame();
+document.body.addEventListener("click",()=>{
+  if(index<lines.length){
+    text.innerHTML+=lines[index]+"<br>";
+    index++;
+    bgm.play();
   }
+});
 
-  setTimeout(()=>h.remove(),9000);
+function floatItem(symbol){
+  const f=document.createElement("div");
+  f.className="float";
+  f.innerHTML=symbol;
+  f.style.left=Math.random()*95+"vw";
+  f.style.animationDuration=(8+Math.random()*6)+"s";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),14000);
 }
 
-let interval=setInterval(createHeart,900);
-
-function winGame(){
-  clearInterval(interval);
-  document.getElementById("start").classList.add("hidden");
-  document.getElementById("final").classList.remove("hidden");
-  document.getElementById("bgm").play();
-}
+setInterval(()=>{
+  floatItem("❤️");
+  floatItem("✨");
+},900);
 </script>
 
 </body>
