@@ -2,99 +2,120 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
+<title>For My Uyir ❤️</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 body{
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:linear-gradient(120deg,#ff758c,#ff7eb3);
-  color:white;
+  background:radial-gradient(circle at top,#ff9a9e,#fad0c4);
+  color:#fff;
   text-align:center;
-  overflow-x:hidden;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
 }
+
 .container{
   padding:40px 20px;
 }
+
 h1{
-  font-size:32px;
-  margin-bottom:10px;
+  font-family:'Great Vibes',cursive;
+  font-size:42px;
+  animation:glow 2s infinite alternate;
 }
+
+@keyframes glow{
+  from{text-shadow:0 0 10px #fff;}
+  to{text-shadow:0 0 30px #ffebf0;}
+}
+
 p{
   font-size:18px;
-  line-height:1.6;
+  line-height:1.7;
 }
+
 button{
-  background:white;
-  color:#ff4d6d;
+  margin-top:25px;
+  padding:14px 28px;
   border:none;
-  padding:14px 24px;
   border-radius:30px;
+  background:#fff;
+  color:#ff4d6d;
   font-size:16px;
-  margin-top:20px;
 }
+
 button:active{
   transform:scale(0.95);
 }
-.heart{
+
+.hidden{display:none;}
+
+.heart,.star{
   position:fixed;
   bottom:-20px;
-  font-size:20px;
   animation:float 6s linear infinite;
 }
+
 @keyframes float{
   0%{transform:translateY(0);opacity:1;}
-  100%{transform:translateY(-100vh);opacity:0;}
-}
-.hidden{
-  display:none;
+  100%{transform:translateY(-110vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
+<audio id="song" loop>
+  <source src="neerparavai.mp3" type="audio/mpeg">
+</audio>
+
 <div class="container">
-  <h1>Hey My Love ❤️</h1>
+  <h1>Hey En Uyir ❤️</h1>
+
   <p>
-    This page is not just a website…<br>
-    It’s my heart speaking to you 🥹💖
+    Indha page oru website illa…<br>
+    Idhu **unnoda peru ezhuthina ennoda manasu** 🥹💖
   </p>
 
-  <button onclick="reveal()">Tap Here Baby 💌</button>
+  <button onclick="startLove()">Tap Pannu Baby 💕</button>
 
   <div id="msg" class="hidden">
     <p>
-      From the day you came into my life,<br>
-      everything started feeling right 💕<br><br>
+      Nee siricha pothu,<br>
+      En ulagam azhaga maaruthu 😍<br><br>
 
-      Your smile is my favorite place to stay 😍<br>
-      Your voice is my calm 😌<br>
-      Your love is my strength 💪❤️<br><br>
+      Nee pesaama irundhaalum,<br>
+      En manasu un kooda dhaan pesuthu 💭❤️<br><br>
 
-      No matter what happens,<br>
-      I promise to stand by you,<br>
-      hold your hand,<br>
-      and love you more every single day 🫂💞<br><br>
+      Kastam vandhaalum,<br>
+      Sandhosham vandhaalum,<br>
+      **Un kai pidichu naan nadappen** 🫂💞<br><br>
 
-      You are not just my girlfriend…<br>
-      You are my home 🏡❤️<br><br>
+      Nee mattum pothum…<br>
+      En life complete aagum 🏡✨<br><br>
 
-      <b>I LOVE YOU ENDLESSLY 😘💖</b>
+      <b>EN UYIR, EN KADHAL, EN ELLAME NEE ❤️🔥</b>
     </p>
   </div>
 </div>
 
 <script>
-function reveal(){
+function startLove(){
   document.getElementById("msg").classList.remove("hidden");
-  for(let i=0;i<25;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=(3+Math.random()*3)+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
+  document.getElementById("song").play();
+
+  for(let i=0;i<40;i++){
+    let e=document.createElement("div");
+    e.className=Math.random()>0.5?"heart":"star";
+    e.innerHTML=Math.random()>0.5?"❤️":"✨";
+    e.style.left=Math.random()*100+"vw";
+    e.style.fontSize=(18+Math.random()*18)+"px";
+    e.style.animationDuration=(3+Math.random()*4)+"s";
+    document.body.appendChild(e);
+    setTimeout(()=>e.remove(),7000);
   }
 }
 </script>
