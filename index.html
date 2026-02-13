@@ -2,121 +2,126 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For My Uyir ❤️</title>
+<title>For You</title>
 
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-body{
-  margin:0;
-  background:radial-gradient(circle at top,#ff9a9e,#fad0c4);
-  color:#fff;
-  text-align:center;
-  font-family:'Poppins',sans-serif;
-  overflow:hidden;
+*{
+  box-sizing:border-box;
 }
 
-.container{
-  padding:40px 20px;
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(160deg,#0b0f1a,#121a2f,#0b132b);
+  color:#f1f1f1;
+  font-family:'Inter',sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.card{
+  max-width:640px;
+  padding:50px 45px;
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(14px);
+  border-radius:22px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.6);
+  animation:fadeIn 1.5s ease;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
 }
 
 h1{
-  font-family:'Great Vibes',cursive;
-  font-size:42px;
-  animation:glow 2s infinite alternate;
-}
-
-@keyframes glow{
-  from{text-shadow:0 0 10px #fff;}
-  to{text-shadow:0 0 30px #ffebf0;}
+  font-family:'Playfair Display',serif;
+  font-size:36px;
+  margin-bottom:20px;
+  letter-spacing:1px;
 }
 
 p{
-  font-size:18px;
-  line-height:1.7;
+  font-size:17px;
+  line-height:1.9;
+  opacity:0.95;
 }
 
 button{
-  margin-top:25px;
-  padding:14px 28px;
-  border:none;
+  margin-top:35px;
+  padding:14px 34px;
   border-radius:30px;
+  border:1px solid rgba(255,255,255,0.3);
+  background:transparent;
+  color:#fff;
+  font-size:15px;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:all 0.4s ease;
+}
+
+button:hover{
   background:#fff;
-  color:#ff4d6d;
-  font-size:16px;
+  color:#000;
 }
 
-button:active{
-  transform:scale(0.95);
+.hidden{
+  display:none;
 }
 
-.hidden{display:none;}
-
-.heart,.star{
-  position:fixed;
-  bottom:-20px;
-  animation:float 6s linear infinite;
-}
-
-@keyframes float{
-  0%{transform:translateY(0);opacity:1;}
-  100%{transform:translateY(-110vh);opacity:0;}
+audio{
+  display:none;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="song" loop>
+<audio id="bgm" loop>
   <source src="neerparavai.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
-  <h1>Hey En Uyir ❤️</h1>
+<div class="card">
+  <h1>For You</h1>
 
   <p>
-    Indha page oru website illa…<br>
-    Idhu **unnoda peru ezhuthina ennoda manasu** 🥹💖
+    This isn’t something random I put together.<br>
+    This is intentional. Just like you are to me.
   </p>
 
-  <button onclick="startLove()">Tap Pannu Baby 💕</button>
+  <button onclick="reveal()">Read This</button>
 
-  <div id="msg" class="hidden">
+  <div id="content" class="hidden">
     <p>
-      Nee siricha pothu,<br>
-      En ulagam azhaga maaruthu 😍<br><br>
+      I don’t believe love needs loud words or dramatic promises.<br>
+      I believe in consistency. In choosing the same person, every day.
+      <br><br>
 
-      Nee pesaama irundhaalum,<br>
-      En manasu un kooda dhaan pesuthu 💭❤️<br><br>
+      In a world that moves fast and forgets easily,<br>
+      you are my pause. My calm. My certainty.
+      <br><br>
 
-      Kastam vandhaalum,<br>
-      Sandhosham vandhaalum,<br>
-      **Un kai pidichu naan nadappen** 🫂💞<br><br>
+      You don’t just make moments better —<br>
+      you make life feel complete.
+      <br><br>
 
-      Nee mattum pothum…<br>
-      En life complete aagum 🏡✨<br><br>
+      If I ever had to define what “home” means to me,<br>
+      it wouldn’t be a place.<br>
+      It would be you.
+      <br><br>
 
-      <b>EN UYIR, EN KADHAL, EN ELLAME NEE ❤️🔥</b>
+      <b>Always.</b>
     </p>
   </div>
 </div>
 
 <script>
-function startLove(){
-  document.getElementById("msg").classList.remove("hidden");
-  document.getElementById("song").play();
-
-  for(let i=0;i<40;i++){
-    let e=document.createElement("div");
-    e.className=Math.random()>0.5?"heart":"star";
-    e.innerHTML=Math.random()>0.5?"❤️":"✨";
-    e.style.left=Math.random()*100+"vw";
-    e.style.fontSize=(18+Math.random()*18)+"px";
-    e.style.animationDuration=(3+Math.random()*4)+"s";
-    document.body.appendChild(e);
-    setTimeout(()=>e.remove(),7000);
-  }
+function reveal(){
+  document.getElementById("content").classList.remove("hidden");
+  document.getElementById("bgm").play();
 }
 </script>
 
