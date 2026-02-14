@@ -2,216 +2,104 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Cheloo</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
 <style>
-*{box-sizing:border-box}
-
 body{
   margin:0;
-  min-height:100vh;
-  background:radial-gradient(circle at top,#1b1f3b,#05060f);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-family:'Inter',sans-serif;
-  color:#f8fafc;
+  font-family:Poppins, sans-serif;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:#fff;
+  text-align:center;
   overflow:hidden;
 }
+.screen{display:none; min-height:100vh; padding-top:80px;}
+.active{display:block;}
 
-.screen{
-  display:none;
-  width:100%;
-  justify-content:center;
-}
-
-.active{display:flex}
-
-.card{
-  width:90%;
-  max-width:760px;
-  padding:55px 45px;
-  border-radius:30px;
-  background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.04));
-  backdrop-filter:blur(18px);
-  border:2px solid rgba(255,255,255,.25);
-  box-shadow:0 40px 120px rgba(0,0,0,.85);
-  text-align:center;
-}
-
-h1{
-  font-family:'Playfair Display',serif;
-  font-size:40px;
-}
-
-h1 span{
-  font-family:'Dancing Script',cursive;
-  color:#f472b6;
-  font-size:48px;
-}
-
-p{
-  font-size:18px;
-  line-height:1.9;
+#heart{
+  position:absolute;
+  font-size:50px;
+  cursor:pointer;
+  transition:0.3s;
 }
 
 button{
-  margin-top:30px;
-  padding:12px 34px;
-  border-radius:25px;
+  background:#fff;
+  color:#ff4f7a;
   border:none;
-  background:linear-gradient(135deg,#f472b6,#fb7185);
-  color:#111;
-  font-size:15px;
-  font-weight:500;
+  padding:14px 22px;
+  border-radius:30px;
+  font-size:16px;
+  margin:10px;
 }
-
-.float{
-  position:fixed;
-  bottom:-40px;
-  font-size:22px;
-  animation:floatUp linear forwards;
-  pointer-events:none;
+.card{
+  background:rgba(255,255,255,0.2);
+  padding:20px;
+  border-radius:20px;
+  margin:15px;
 }
-
-@keyframes floatUp{
-  from{transform:translateY(0);opacity:1}
-  to{transform:translateY(-130vh);opacity:0}
-}
-
-audio{display:none}
 </style>
 </head>
 
 <body>
 
-<audio id="bgm" loop>
-  <source src="neerparavai.mp3" type="audio/mpeg">
-</audio>
-
-<!-- LEVEL 1 -->
-<div class="screen active" id="lvl1">
-  <div class="card">
-    <h1>Hi <span>Cheloo</span></h1>
-    <p>Catch <b>7 hearts ❤️</b><br>to begin</p>
-    <p id="count">0 / 7</p>
-  </div>
+<!-- SCREEN 1 -->
+<div class="screen active" id="s1">
+  <h2>❤️ Catch the Heart</h2>
+  <p>Heart-a tap pannina next level 😏</p>
+  <div id="heart">💖</div>
 </div>
 
-<!-- LEVEL 2 -->
-<div class="screen" id="lvl2">
-  <div class="card">
-    <h1>For <span>Cheloo</span></h1>
-    <p id="story"></p>
-    <button id="storyBtn">Tap to continue</button>
-  </div>
+<!-- SCREEN 2 -->
+<div class="screen" id="s2">
+  <h2>Tap to Reveal</h2>
+  <div class="card">Cheloo ❤️</div>
+  <div class="card">My Everything 💫</div>
+  <div class="card">Still Here 🤍</div>
+  <button onclick="next(3)">Continue →</button>
 </div>
 
-<!-- LEVEL 3 -->
-<div class="screen" id="lvl3">
-  <div class="card">
-    <h1>One small choice</h1>
-    <p>Coffee ☕ or Tea 🍵 ?</p>
-    <button onclick="nextLevel()">Coffee</button>
-    <button onclick="nextLevel()">Tea</button>
-  </div>
+<!-- SCREEN 3 -->
+<div class="screen" id="s3">
+  <h2>Memory Choice</h2>
+  <p>En life la most important yaru?</p>
+  <button onclick="next(4)">You 💖</button>
+  <button onclick="next(4)">Always You 💞</button>
 </div>
 
-<!-- LEVEL 4 -->
-<div class="screen" id="lvl4">
-  <div class="card">
-    <h1>Cheloo</h1>
-    <p>
-      I don’t love loudly.<br>
-      I love gently.<br><br>
-
-      You are <b>my everything</b>.<br>
-      My calm. My safe place.<br><br>
-
-      I choose you —<br>
-      quietly, every day.
-    </p>
-    <button>Still here</button>
-  </div>
+<!-- SCREEN 4 -->
+<div class="screen" id="s4">
+  <h1>💌 Final Message</h1>
+  <p>
+    Nee illama na complete illa.<br>
+    Idhu game illa…<br>
+    Idhu en heart 💖
+  </p>
+  <h2>I Love You Always ♾️</h2>
 </div>
 
 <script>
-const bgm=document.getElementById("bgm");
+const heart = document.getElementById("heart");
 
-/* floating hearts & stars */
-function floatItem(sym){
-  const f=document.createElement("div");
-  f.className="float";
-  f.innerHTML=sym;
-  f.style.left=Math.random()*95+"vw";
-  f.style.animationDuration=(8+Math.random()*6)+"s";
-  document.body.appendChild(f);
-  setTimeout(()=>f.remove(),15000);
+function moveHeart(){
+  const x = Math.random() * (window.innerWidth - 60);
+  const y = Math.random() * (window.innerHeight - 120);
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
 }
-setInterval(()=>{
-  floatItem("❤️");
-  floatItem("✨");
-},900);
+moveHeart();
+setInterval(moveHeart, 900);
 
-/* LEVEL 1 */
-let hearts=0;
-const count=document.getElementById("count");
-function spawnHeart(){
-  const h=document.createElement("div");
-  h.className="float";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*90+"vw";
-  h.style.fontSize="26px";
-  h.style.pointerEvents="auto";
-  h.onclick=()=>{
-    hearts++;
-    count.innerText=hearts+" / 7";
-    h.remove();
-    if(hearts===7){
-      show("lvl2");
-      bgm.play();
-    }
-  };
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),9000);
-}
-setInterval(spawnHeart,900);
+heart.addEventListener("click", ()=>{
+  next(2);
+});
 
-/* LEVEL 2 */
-const lines=[
-  "Hi Cheloo…",
-  "This page wasn’t made in a hurry.",
-  "It was made slowly.",
-  "Because you matter.",
-  "",
-  "You bring calm into my thoughts.",
-  "You make silence feel warm."
-];
-let i=0;
-const story=document.getElementById("story");
-document.getElementById("storyBtn").onclick=()=>{
-  if(i<lines.length){
-    story.innerHTML+=lines[i]+"<br>";
-    i++;
-  }else{
-    show("lvl3");
-  }
-};
-
-/* helpers */
-function show(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
-
-function nextLevel(){
-  show("lvl4");
+function next(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
 }
 </script>
 
 </body>
 </html>
 
-  
