@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For Keerthana</title>
+<title>For Cheloo</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
@@ -12,63 +12,62 @@
 body{
   margin:0;
   min-height:100vh;
-  background:radial-gradient(circle at top,#1b1f3b,#090a1a 70%);
-  overflow:hidden;
-  font-family:'Inter',sans-serif;
-  color:#f8fafc;
-  touch-action:manipulation;
-}
-
-.container{
-  position:absolute;
-  inset:0;
+  background:radial-gradient(circle at top,#1b1f3b,#05060f);
   display:flex;
   align-items:center;
   justify-content:center;
+  font-family:'Inter',sans-serif;
+  color:#f8fafc;
+  overflow:hidden;
 }
+
+.screen{
+  display:none;
+  width:100%;
+  justify-content:center;
+}
+
+.active{display:flex}
 
 .card{
   width:90%;
   max-width:760px;
-  min-height:320px;
-  padding:60px 50px;
+  padding:55px 45px;
   border-radius:30px;
-  background:linear-gradient(145deg,rgba(255,255,255,0.14),rgba(255,255,255,0.04));
-  backdrop-filter:blur(20px);
-  border:2px solid rgba(255,255,255,0.25);
-  box-shadow:0 50px 120px rgba(0,0,0,.8);
+  background:linear-gradient(145deg,rgba(255,255,255,.15),rgba(255,255,255,.04));
+  backdrop-filter:blur(18px);
+  border:2px solid rgba(255,255,255,.25);
+  box-shadow:0 40px 120px rgba(0,0,0,.85);
   text-align:center;
 }
 
 h1{
   font-family:'Playfair Display',serif;
-  font-size:42px;
+  font-size:40px;
 }
 
 h1 span{
   font-family:'Dancing Script',cursive;
   color:#f472b6;
-  font-size:50px;
+  font-size:48px;
 }
 
-.subtitle{
-  opacity:.85;
-  margin-bottom:25px;
-}
-
-.message{
-  font-size:19px;
+p{
+  font-size:18px;
   line-height:1.9;
-  min-height:160px;
 }
 
-.tap{
-  margin-top:20px;
-  font-size:14px;
-  opacity:.6;
+button{
+  margin-top:30px;
+  padding:12px 34px;
+  border-radius:25px;
+  border:none;
+  background:linear-gradient(135deg,#f472b6,#fb7185);
+  color:#111;
+  font-size:15px;
+  font-weight:500;
 }
 
-/* hearts & stars */
 .float{
   position:fixed;
   bottom:-40px;
@@ -92,69 +91,127 @@ audio{display:none}
   <source src="neerparavai.mp3" type="audio/mpeg">
 </audio>
 
-<div class="container">
-  <div class="card" id="card">
-    <h1>For <span>Keerthana</span></h1>
-    <div class="subtitle">Tap slowly… read gently</div>
-    <div class="message" id="text"></div>
-    <div class="tap">Tap anywhere on this card</div>
+<!-- LEVEL 1 -->
+<div class="screen active" id="lvl1">
+  <div class="card">
+    <h1>Hi <span>Cheloo</span></h1>
+    <p>Catch <b>7 hearts ❤️</b><br>to begin</p>
+    <p id="count">0 / 7</p>
+  </div>
+</div>
+
+<!-- LEVEL 2 -->
+<div class="screen" id="lvl2">
+  <div class="card">
+    <h1>For <span>Cheloo</span></h1>
+    <p id="story"></p>
+    <button id="storyBtn">Tap to continue</button>
+  </div>
+</div>
+
+<!-- LEVEL 3 -->
+<div class="screen" id="lvl3">
+  <div class="card">
+    <h1>One small choice</h1>
+    <p>Coffee ☕ or Tea 🍵 ?</p>
+    <button onclick="nextLevel()">Coffee</button>
+    <button onclick="nextLevel()">Tea</button>
+  </div>
+</div>
+
+<!-- LEVEL 4 -->
+<div class="screen" id="lvl4">
+  <div class="card">
+    <h1>Cheloo</h1>
+    <p>
+      I don’t love loudly.<br>
+      I love gently.<br><br>
+
+      You are <b>my everything</b>.<br>
+      My calm. My safe place.<br><br>
+
+      I choose you —<br>
+      quietly, every day.
+    </p>
+    <button>Still here</button>
   </div>
 </div>
 
 <script>
-const lines=[
-  "Hi My baeeeee…",
-  "This page wasn’t made in a rush.",
-  "It was made slowly. Carefully.",
-  "Just like how I think about you.",
-  "",
-  "You bring calm into my chaos.",
-  "You make silence feel warm.",
-  "",
-  "In a world full of temporary things,",
-  "you are my constant.",
-  "",
-  "I don’t love loudly.",
-  "I love deeply.",
-  "",
-  "If forever had a feeling,",
-  "it would feel like you.",
-  "",
-  "Always.",
-  "Only you ❤️"
-];
-
-let index=0;
-const text=document.getElementById("text");
-const card=document.getElementById("card");
 const bgm=document.getElementById("bgm");
 
-function nextLine(){
-  if(index<lines.length){
-    text.innerHTML+=lines[index]+"<br>";
-    index++;
-    bgm.play();
-  }
-}
-
-card.addEventListener("click",nextLine);
-card.addEventListener("touchstart",nextLine,{passive:true});
-
-function floatItem(symbol){
+/* floating hearts & stars */
+function floatItem(sym){
   const f=document.createElement("div");
   f.className="float";
-  f.innerHTML=symbol;
+  f.innerHTML=sym;
   f.style.left=Math.random()*95+"vw";
-  f.style.animationDuration=(9+Math.random()*6)+"s";
+  f.style.animationDuration=(8+Math.random()*6)+"s";
   document.body.appendChild(f);
   setTimeout(()=>f.remove(),15000);
 }
-
 setInterval(()=>{
   floatItem("❤️");
   floatItem("✨");
 },900);
+
+/* LEVEL 1 */
+let hearts=0;
+const count=document.getElementById("count");
+function spawnHeart(){
+  const h=document.createElement("div");
+  h.className="float";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*90+"vw";
+  h.style.fontSize="26px";
+  h.style.pointerEvents="auto";
+  h.onclick=()=>{
+    hearts++;
+    count.innerText=hearts+" / 7";
+    h.remove();
+    if(hearts===7){
+      show("lvl2");
+      bgm.play();
+    }
+  };
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),9000);
+}
+setInterval(spawnHeart,900);
+
+/* LEVEL 2 */
+const lines=[
+  "Hi Cheloo…",
+  "This page wasn’t made in a hurry.",
+  "It was made slowly.",
+  "Because you matter.",
+  "",
+  "You bring calm into my thoughts.",
+  "You make silence feel warm."
+];
+let i=0;
+const story=document.getElementById("story");
+document.getElementById("storyBtn").onclick=()=>{
+  if(i<lines.length){
+    story.innerHTML+=lines[i]+"<br>";
+    i++;
+  }else{
+    show("lvl3");
+  }
+};
+
+/* helpers */
+function show(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function nextLevel(){
+  show("lvl4");
+}
 </script>
 
 </body>
 </html>
+
+  
